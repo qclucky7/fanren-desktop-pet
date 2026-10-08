@@ -1,0 +1,52 @@
+{
+  "name": "fanren-desktop-pet",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "generate:pet-previews": "node scripts/generate-pet-previews.mjs",
+    "predev": "npm run generate:pet-previews",
+    "dev": "vite --port 1420",
+    "build": "tsc -b && vite build",
+    "prebuild": "npm run generate:pet-previews",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "node scripts/build-release.mjs",
+    "release:version": "node scripts/bump-version.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.23",
+    "@radix-ui/react-dialog": "^1.1.23",
+    "@radix-ui/react-label": "^2.1.15",
+    "@radix-ui/react-slider": "latest",
+    "@radix-ui/react-slot": "^1.3.3",
+    "@radix-ui/react-switch": "^1.3.7",
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwind-merge": "latest"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "autoprefixer": "latest",
+    "jsdom": "^26.1.0",
+    "postcss": "latest",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^3.4.17",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

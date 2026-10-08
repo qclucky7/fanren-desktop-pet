@@ -1,0 +1,29 @@
+.general-settings-page {
+  width: 100%;
+  height: 100%;
+  padding: 14px 22px 18px;
+  overflow: auto;
+}
+.settings-page-content { width: min(760px, 100%); }
+.settings-page-heading { align-items: flex-end; }
+.settings-group { margin-top: 14px; }
+.settings-group-heading { margin: 0 2px 8px; }
+.settings-group-heading h2 { margin: 0; font-size: 12px; font-weight: 600; }
+.system-settings-card { gap: 0; padding: 0; overflow: hidden; border-radius: var(--radius); box-shadow: none; }
+.system-setting-row { display: flex; min-height: 74px; align-items: center; gap: 12px; padding: 13px 16px; }
+.system-setting-icon {
+  display: inline-flex;
+  width: 20px;
+  flex: none;
+  color: hsl(var(--muted-foreground));
+}
+.system-setting-icon svg { width: 17px; height: 17px; }
+.system-setting-copy { min-width: 0; flex: 1; }
+.system-setting-copy h3 { margin: 0; font-size: 13px; font-weight: 600; }
+.system-setting-copy p { margin: 3px 0 0; color: hsl(var(--muted-foreground)); font-size: 11px; line-height: 1.45; }
+.system-setting-divider { height: 1px; margin: 0 16px 0 48px; background: hsl(var(--border)); }
+.directory-button { flex: none; }
+
+@media (max-width: 940px) {
+  .general-settings-page { padding-inline: 14px; }
+}

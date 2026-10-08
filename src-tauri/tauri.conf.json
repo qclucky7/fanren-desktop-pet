@@ -1,0 +1,70 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "凡人修仙传桌宠",
+  "version": "0.1.0",
+  "identifier": "com.wangchen.lingban-pet-player",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "settings",
+        "title": "凡人修仙传桌宠 · 宠物配置",
+        "width": 920,
+        "height": 680,
+        "minWidth": 820,
+        "minHeight": 620,
+        "center": true,
+        "resizable": true,
+        "visible": false
+      },
+      {
+        "label": "pet",
+        "title": "凡人修仙传桌宠",
+        "url": "index.html?view=pet",
+        "width": 320,
+        "height": 360,
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "shadow": false,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["$APPDATA/**"]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "resources": [
+      "../pets/**/*.json",
+      "../pets/**/*.webp"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["SimpChinese"],
+        "installerIcon": "icons/icon.ico"
+      }
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

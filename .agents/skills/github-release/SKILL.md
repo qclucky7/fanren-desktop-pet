@@ -1,7 +1,7 @@
 ---
 name: github-release
 description: 为凡人修仙传桌宠准备并发布规范的 GitHub Release。用户说“发布”“发版”“升版本”“打 tag”“生成发布日志”“更新 CHANGELOG”或要求 GitHub Release 时必须使用；自动判断语义化版本、同步所有版本文件、维护 CHANGELOG 和中文 Release Notes、验证构建，并在确认后创建 tag 和发布 GitHub Release。
-compatibility: 需要 Node.js、npm、Rust、Git；真正发布需要已配置的 GitHub 远端和可用的 gh CLI 或 GitHub 发布能力。
+compatibility: 需要 Node.js、npm、Rust、Git；真正发布需要已配置的 GitHub 远端和可用的 gh CLI 或 GitHub API 凭据。
 ---
 
 # GitHub Release
@@ -47,7 +47,7 @@ npm run release:version -- 1.2.3
 2. 只使用实际存在的分类：`新增`、`改进`、`修复`、`移除`、`兼容性`。
 3. 从 `release-notes/TEMPLATE.md` 创建 `release-notes/vx.y.z.md`。面向用户写作，避免内部文件名和实现术语堆砌。
 4. Release Notes 至少说明：版本定位、主要亮点、功能变化、问题修复、安装方式、数据兼容性和实际完成的验证。
-5. 下载文件按真实产物列出；当前仅正式支持 Windows NSIS，不要虚构 macOS 或 Linux 下载项。
+5. 下载文件按真实产物列出；当前仅正式支持 Windows NSIS，不要虚构 macOS 或 Linux 下载项。GitHub 可能过滤中文附件名，上传后以实际附件名更新说明。
 
 ## 四、验证
 
@@ -73,8 +73,9 @@ npm run tauri:build
 - Git tag：`v<版本>`
 - Release 标题：`凡人修仙传桌宠 v<版本>`
 - tag 必须指向已经包含版本号、CHANGELOG 和 Release Notes 的提交。
-- 推送 tag 后由 `.github/workflows/release.yml` 构建 Windows 安装程序并创建 GitHub Release。
-- 工作流完成后检查 Release 页面、说明正文和安装包；失败或资产不完整时不要标记发布完成。
+- 本机通过 `npm run tauri:build` 生成并验证安装包；不要依赖 GitHub Actions 在线构建。本仓库不保留发布 workflow。
+- 推送包含发布内容的提交和 tag 后，用可用的 GitHub 发布能力（例如 `gh` CLI 或带权限的 GitHub API）手动创建 Release，并上传本机 `release/<版本>/windows/` 中当前版本的安装包。
+- 检查 Release 页面、说明正文、附件名称、大小和 SHA-256；资产不完整时不要标记发布完成。上传时不要把旧版本缓存包混进附件。
 
 不要覆盖已经存在的远端 tag 或 Release。若同一版本需要修复，提升 patch 版本；只有用户明确要求且理解影响时才处理错误发布。
 

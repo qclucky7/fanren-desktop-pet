@@ -54,7 +54,7 @@ npm run build        # 前端生产构建
 npm run tauri:build  # 为当前系统构建安装包并整理发布文件
 ```
 
-打包结果位于 `release/<版本>/<操作系统>/`。目前 GitHub Actions 的发布流程构建 Windows NSIS 安装包；其他系统的打包脚本已有对应产物目录，但桌宠交互和发布流程尚未按这些系统完成验证。
+打包结果位于 `release/<版本>/<操作系统>/`。当前在本机完成 Windows NSIS 打包，再手动上传至 GitHub Releases；仓库不使用 GitHub Actions 自动打包。其他系统的打包脚本已有对应产物目录，但桌宠交互和发布流程尚未按这些系统完成验证。
 
 ## 添加宠物
 

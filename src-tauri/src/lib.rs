@@ -4,6 +4,7 @@ mod models;
 mod pets;
 mod state;
 mod tray;
+mod tray_pets;
 mod windows;
 
 use models::AppState;
@@ -21,6 +22,12 @@ pub fn run() {
             Some(vec![tray::AUTOSTART_ARG]),
         ))
         .setup(|app| {
+            if let Some(settings_window) = app.get_webview_window("settings") {
+                settings_window.set_title(&format!(
+                    "凡人修仙传桌宠 · 宠物配置 · v{}",
+                    app.package_info().version
+                ))?;
+            }
             if cfg!(debug_assertions) {
                 app.handle().plugin(
                     tauri_plugin_log::Builder::default()
@@ -31,6 +38,8 @@ pub fn run() {
 
             let data_dir = data_directory::application_data_directory(&app.path().data_dir()?);
             fs::create_dir_all(state::pets_dir(&data_dir))?;
+            app.asset_protocol_scope()
+                .allow_directory(&data_dir, true)?;
             let built_in_pet_ids =
                 pets::seed_built_ins(app.handle(), &data_dir).map_err(std::io::Error::other)?;
             let mut stored =

@@ -1,13 +1,15 @@
 use crate::{
     models::AppState,
     state::{emit_changed, read_state, write_state},
+    tray_pets::{activate_pet_from_tray, pet_id_from_menu_id, refresh_pet_submenu},
     windows::apply_pet_visibility,
 };
+use std::sync::atomic::{AtomicBool, Ordering};
 use tauri::{
-    menu::{CheckMenuItem, Menu, MenuItem},
+    menu::{CheckMenuItem, Menu, MenuItem, Submenu},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
     utils::config::Color,
-    App, AppHandle, Manager, State, Theme,
+    App, AppHandle, Listener, Manager, State, Theme,
 };
 use tauri_plugin_autostart::ManagerExt as AutostartManagerExt;
 
@@ -15,6 +17,7 @@ use tauri_plugin_autostart::ManagerExt as AutostartManagerExt;
 use winreg::{enums::HKEY_CURRENT_USER, RegKey};
 
 pub(crate) const AUTOSTART_ARG: &str = "--autostart";
+static SETTINGS_BACKGROUND_INITIALIZED: AtomicBool = AtomicBool::new(false);
 
 pub(crate) struct TrayControls {
     autostart: CheckMenuItem<tauri::Wry>,
@@ -64,12 +67,14 @@ pub(crate) fn show_settings_window(app: &AppHandle) {
         log::warn!("settings window is not available");
         return;
     };
-    let background = match window.theme() {
-        Ok(Theme::Dark) => Color(41, 41, 41, 255),
-        _ => Color(245, 245, 245, 255),
-    };
-    if let Err(error) = window.set_background_color(Some(background)) {
-        log::warn!("failed to set settings window background: {error}");
+    if !SETTINGS_BACKGROUND_INITIALIZED.swap(true, Ordering::Relaxed) {
+        let background = match window.theme() {
+            Ok(Theme::Light) => Color(245, 246, 242, 255),
+            _ => Color(18, 27, 24, 255),
+        };
+        if let Err(error) = window.set_background_color(Some(background)) {
+            log::warn!("failed to set settings window background: {error}");
+        }
     }
     if let Err(error) = window.show() {
         log::warn!("failed to show settings window: {error}");
@@ -211,9 +216,15 @@ pub(crate) fn setup_tray(app: &App, pet_visible: bool) -> tauri::Result<TrayCont
         None::<&str>,
     )?;
     let autostart_for_event = autostart.clone();
+    let pet_list = Submenu::with_id(app, "pet-list", "宠物列表", true)?;
+    refresh_pet_submenu(app.handle(), &pet_list).map_err(std::io::Error::other)?;
+    let pet_list_for_event = pet_list.clone();
     let settings = MenuItem::with_id(app, "settings", "宠物设置", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&toggle_visibility, &autostart, &settings, &quit])?;
+    let menu = Menu::with_items(
+        app,
+        &[&toggle_visibility, &pet_list, &autostart, &settings, &quit],
+    )?;
     TrayIconBuilder::new()
         .icon(
             app.default_window_icon()
@@ -237,9 +248,22 @@ pub(crate) fn setup_tray(app: &App, pet_visible: bool) -> tauri::Result<TrayCont
             "autostart" => toggle_autostart_from_tray(app, &autostart_for_event),
             "settings" => show_settings_window(app),
             "quit" => app.exit(0),
-            _ => {}
+            _ => {
+                if let Some(id) = pet_id_from_menu_id(event.id.as_ref()) {
+                    if let Err(error) = activate_pet_from_tray(app, id) {
+                        log::warn!("failed to activate pet from tray: {error}");
+                        let _ = refresh_pet_submenu(app, &pet_list_for_event);
+                    }
+                }
+            }
         })
         .build(app)?;
+    let app_handle = app.handle().clone();
+    app.listen("player-state-changed", move |_| {
+        if let Err(error) = refresh_pet_submenu(&app_handle, &pet_list) {
+            log::warn!("failed to refresh tray pet list: {error}");
+        }
+    });
     Ok(TrayControls { autostart })
 }
 

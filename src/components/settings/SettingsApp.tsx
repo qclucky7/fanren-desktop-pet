@@ -3,6 +3,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { GeneralSettingsPage } from "@/components/settings/GeneralSettingsPage";
 import { PetManagementPage } from "@/components/settings/PetManagementPage";
 import { SettingsSidebar, type SettingsPage } from "@/components/settings/SettingsSidebar";
+import { fallbackAppVersion, readAppVersion, updateSettingsDocumentTitle } from "@/lib/app-version";
 
 interface RuntimeNotice {
   id: number;
@@ -16,7 +17,19 @@ const NOTICE_REMOVE_DELAY_MS = 3000;
 export function SettingsApp() {
   const [activePage, setActivePage] = useState<SettingsPage>("pets");
   const [notice, setNotice] = useState<RuntimeNotice | null>(null);
+  const [appVersion, setAppVersion] = useState(fallbackAppVersion);
   const noticeId = useRef(0);
+  useEffect(() => {
+    let active = true;
+    void readAppVersion()
+      .catch(() => fallbackAppVersion)
+      .then((version) => {
+        if (!active) return;
+        setAppVersion(version);
+        updateSettingsDocumentTitle(version);
+      });
+    return () => { active = false; };
+  }, []);
   const showNotice = useCallback((message: string) => {
     noticeId.current += 1;
     setNotice({ id: noticeId.current, message, leaving: false });
@@ -60,7 +73,7 @@ export function SettingsApp() {
             <PetManagementPage onNotice={showNotice} />
           </div>
           <div className="settings-page-view" hidden={activePage !== "settings"}>
-            <GeneralSettingsPage onNotice={showNotice} />
+            <GeneralSettingsPage appVersion={appVersion} onNotice={showNotice} />
           </div>
         </div>
       </div>

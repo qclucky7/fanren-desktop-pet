@@ -269,6 +269,23 @@ fn default_built_in_pet_id(built_in_pet_ids: &BTreeSet<String>) -> Option<String
         .cloned()
 }
 
+pub(crate) fn installed_pet_names(data_dir: &Path) -> Result<Vec<(String, String)>, String> {
+    let mut names = Vec::new();
+    for entry in fs::read_dir(pets_dir(data_dir)).map_err(|error| error.to_string())? {
+        let directory = entry.map_err(|error| error.to_string())?.path();
+        if !directory.is_dir() {
+            continue;
+        }
+        if let Ok(manifest) = parse_manifest(&directory) {
+            if directory.file_name().and_then(|name| name.to_str()) == Some(manifest.id.as_str()) {
+                names.push((manifest.id, manifest.display_name));
+            }
+        }
+    }
+    names.sort_by(|left, right| left.0.cmp(&right.0));
+    Ok(names)
+}
+
 #[tauri::command]
 pub(crate) fn list_pets(state: State<AppState>) -> Result<Vec<PetRecord>, String> {
     let mut stored = read_state(&state.data_dir)?;

@@ -2,6 +2,7 @@ import { convertFileSrc, invoke } from "@tauri-apps/api/core";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 import { open } from "@tauri-apps/plugin-dialog";
 import { DEFAULT_PREFERENCES, DISCOVERED_PETS, loadBrowserPets } from "@/data/pet-catalog";
+import type { ResolvedTheme, ThemePreference } from "./theme-preference";
 import { MAX_DIALOGUE_SECONDS, MIN_DIALOGUE_SECONDS, type DialogueGroups, type DialogueKind, type PetRecord, type PlayerPreferences } from "./types";
 
 const PREFS_KEY = "fanren-desktop-pet.preferences";
@@ -75,6 +76,16 @@ function normalizeBrowserPreferences(value: unknown): PlayerPreferences {
 
 export function isTauriRuntime() {
   return "__TAURI_INTERNALS__" in window;
+}
+
+export async function syncSettingsWindowTheme(preference: ThemePreference, resolved: ResolvedTheme) {
+  if (!isTauriRuntime()) return;
+  const { getCurrentWindow } = await import("@tauri-apps/api/window");
+  const window = getCurrentWindow();
+  await Promise.all([
+    window.setTheme(preference === "system" ? null : resolved),
+    window.setBackgroundColor(resolved === "dark" ? "#121b18" : "#f5f6f2"),
+  ]);
 }
 
 export interface CursorPosition {

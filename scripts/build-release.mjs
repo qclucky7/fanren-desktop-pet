@@ -2,6 +2,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { selectCurrentVersionArtifacts } from "./release-artifacts.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
@@ -145,7 +146,11 @@ function run() {
 
   const targetRoot = path.join(projectRoot, "src-tauri", "target");
   const bundleRoot = path.join(targetRoot, ...(targetTriple ? [targetTriple] : []), "release", "bundle");
-  const artifacts = collectArtifacts(bundleRoot, platform.sources);
+  const artifacts = selectCurrentVersionArtifacts(
+    collectArtifacts(bundleRoot, platform.sources),
+    version,
+    buildPlatform,
+  );
 
   if (artifacts.length === 0) {
     throw new Error(`构建成功，但没有在 ${bundleRoot} 找到可发布文件`);

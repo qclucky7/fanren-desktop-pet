@@ -31,6 +31,37 @@ fn repository_pets_are_discovered_without_a_hardcoded_id_list() {
 }
 
 #[test]
+fn tray_choices_only_include_valid_installed_packages() {
+    let data_dir = temporary_directory("tray-choices");
+    let root = pets_dir(&data_dir);
+    let valid = root.join("valid-pet");
+    let broken = root.join("broken-pet");
+    let mismatched = root.join("wrong-folder");
+    for directory in [&valid, &broken, &mismatched] {
+        fs::create_dir_all(directory).unwrap();
+    }
+    fs::write(
+        valid.join("pet.json"),
+        r#"{"id":"valid-pet","displayName":"有效角色","description":"","spriteVersionNumber":2,"spritesheetPath":"spritesheet.webp"}"#,
+    )
+    .unwrap();
+    fs::write(valid.join("spritesheet.webp"), b"atlas").unwrap();
+    fs::write(broken.join("pet.json"), b"{not json").unwrap();
+    fs::write(
+        mismatched.join("pet.json"),
+        r#"{"id":"other-pet","displayName":"错误目录","description":"","spriteVersionNumber":2,"spritesheetPath":"spritesheet.webp"}"#,
+    )
+    .unwrap();
+    fs::write(mismatched.join("spritesheet.webp"), b"atlas").unwrap();
+
+    assert_eq!(
+        installed_pet_names(&data_dir).unwrap(),
+        vec![("valid-pet".into(), "有效角色".into())]
+    );
+    fs::remove_dir_all(data_dir).unwrap();
+}
+
+#[test]
 fn installed_pet_paths_reject_traversal_and_absolute_inputs() {
     let data_dir = Path::new("C:/safe/app-data");
 

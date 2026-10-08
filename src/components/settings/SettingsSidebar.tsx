@@ -1,6 +1,5 @@
 import { PawPrint, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import appIconUrl from "../../../src-tauri/icons/icon.png";
 
 export type SettingsPage = "pets" | "settings";
 
@@ -17,14 +16,6 @@ const NAV_ITEMS = [
 export function SettingsSidebar({ activePage, onNavigate }: SettingsSidebarProps) {
   return (
     <aside className="settings-sidebar">
-      <div className="sidebar-brand">
-        <div className="brand-mark"><img src={appIconUrl} alt="" /></div>
-        <div className="sidebar-brand-copy">
-          <div className="brand-title">凡人修仙传</div>
-          <div className="brand-subtitle">桌宠</div>
-        </div>
-      </div>
-
       <nav className="sidebar-nav" aria-label="主菜单">
         {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
           <Button

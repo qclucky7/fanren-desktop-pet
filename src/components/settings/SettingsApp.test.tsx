@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SettingsApp } from "./SettingsApp";
+import { version as projectVersion } from "../../../package.json";
 
 vi.mock("@/components/settings/PetManagementPage", () => ({
   PetManagementPage: ({ onNotice }: { onNotice: (message: string) => void }) => (
@@ -22,7 +23,10 @@ vi.mock("@/components/settings/SettingsSidebar", () => ({
 }));
 
 describe("SettingsApp runtime notice", () => {
-  beforeEach(() => vi.useFakeTimers());
+  beforeEach(() => {
+    vi.useFakeTimers();
+    document.title = "未设置版本";
+  });
   afterEach(() => {
     cleanup();
     vi.useRealTimers();
@@ -51,5 +55,13 @@ describe("SettingsApp runtime notice", () => {
 
     expect(screen.queryByRole("status")).not.toBeInTheDocument();
     expect(screen.getByText("设置内容")).toBeVisible();
+  });
+
+  it("adds the current version to the window title", async () => {
+    render(<SettingsApp />);
+
+    await act(async () => { await Promise.resolve(); });
+
+    expect(document.title).toBe(`凡人修仙传桌宠 · 宠物配置 · v${projectVersion}`);
   });
 });

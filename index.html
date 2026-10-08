@@ -3,17 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#292929" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#121b18" />
     <title>凡人修仙传桌宠</title>
     <script>
-      document.documentElement.dataset.view = new URLSearchParams(location.search).get("view") === "pet"
-        ? "pet"
-        : "settings";
+      const view = new URLSearchParams(location.search).get("view") === "pet" ? "pet" : "settings";
+      document.documentElement.dataset.view = view;
+      if (view === "settings") {
+        let preference = "system";
+        try {
+          const saved = localStorage.getItem("fanren-desktop-pet-theme");
+          if (saved === "light" || saved === "dark") preference = saved;
+        } catch {}
+        const dark = preference === "dark" || (
+          preference === "system" && matchMedia("(prefers-color-scheme: dark)").matches
+        );
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark ? "#121b18" : "#f5f6f2";
+      }
     </script>
     <style>
       html, body, #root { width: 100%; height: 100%; margin: 0; }
-      html[data-view="settings"], html[data-view="settings"] body { background: #f5f5f5; }
+      html[data-view="settings"], html[data-view="settings"] body { background: #121b18; }
+      html[data-view="settings"][data-theme="light"],
+      html[data-view="settings"][data-theme="light"] body { background: #f5f6f2; }
       html[data-view="pet"], html[data-view="pet"] body { background: transparent; }
       html[data-view="pet"] .startup-screen { display: none; }
       .startup-screen {
@@ -21,24 +33,24 @@
         width: 100%;
         height: 100%;
         place-items: center;
-        color: #616161;
+        color: #e9ece3;
         font: 13px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif;
       }
+      html[data-theme="light"] .startup-screen { color: #20352c; }
       .startup-screen__content { display: flex; align-items: center; gap: 10px; }
       .startup-screen__indicator {
         width: 14px;
         height: 14px;
-        border: 2px solid #d1d1d1;
-        border-top-color: #616161;
+        border: 2px solid #3c5145;
+        border-top-color: #9bcf9e;
         border-radius: 50%;
         animation: startup-spin .8s linear infinite;
       }
-      @keyframes startup-spin { to { transform: rotate(360deg); } }
-      @media (prefers-color-scheme: dark) {
-        html[data-view="settings"], html[data-view="settings"] body { background: #292929; }
-        .startup-screen { color: #d6d6d6; }
-        .startup-screen__indicator { border-color: #525252; border-top-color: #d6d6d6; }
+      html[data-theme="light"] .startup-screen__indicator {
+        border-color: #bdcfc2;
+        border-top-color: #2d6847;
       }
+      @keyframes startup-spin { to { transform: rotate(360deg); } }
       @media (prefers-reduced-motion: reduce) {
         .startup-screen__indicator { animation: none; }
       }

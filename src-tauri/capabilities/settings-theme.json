@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "settings-theme",
+  "description": "Allow the settings window to follow the selected appearance",
+  "windows": ["settings"],
+  "permissions": [
+    "core:window:allow-set-theme",
+    "core:window:allow-set-background-color"
+  ]
+}

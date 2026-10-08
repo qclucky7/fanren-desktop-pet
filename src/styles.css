@@ -4,30 +4,64 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
-    --foreground: 0 0% 13%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
-    --primary: 0 0% 12%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 18%;
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 38%;
-    --accent: 0 0% 91%;
-    --accent-foreground: 0 0% 13%;
-    --destructive: 0 68% 42%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 86%;
-    --input: 0 0% 76%;
-    --ring: 0 0% 34%;
-    --success: 142 62% 29%;
-    --success-surface: 142 43% 94%;
-    --mist-highlight: 0 0% 100%;
-    --mist-shadow: 0 0% 0%;
-    --radius: 0.75rem;
+    color-scheme: dark;
+    --background: 159 21% 9%;
+    --foreground: 75 18% 91%;
+    --card: 158 18% 13%;
+    --card-foreground: 75 18% 91%;
+    --popover: 158 18% 13%;
+    --popover-foreground: 75 18% 91%;
+    --primary: 123 34% 69%;
+    --primary-foreground: 158 30% 11%;
+    --secondary: 154 18% 19%;
+    --secondary-foreground: 75 18% 91%;
+    --muted: 156 15% 19%;
+    --muted-foreground: 155 10% 73%;
+    --accent: 155 18% 23%;
+    --accent-foreground: 75 18% 91%;
+    --destructive: 4 58% 66%;
+    --destructive-foreground: 159 21% 9%;
+    --border: 153 16% 28%;
+    --input: 153 15% 32%;
+    --ring: 123 34% 69%;
+    --success: 123 34% 69%;
+    --success-surface: 154 21% 18%;
+    --mist-highlight: 75 18% 91%;
+    --mist-shadow: 165 40% 3%;
+    --sidebar: 163 27% 7%;
+    --preview-stage: 157 17% 18%;
+    --inspector-surface: 158 20% 12%;
+    --radius: 0.625rem;
+  }
+
+  html[data-view="settings"][data-theme="light"] {
+    color-scheme: light;
+    --background: 90 12% 96%;
+    --foreground: 159 25% 16%;
+    --card: 80 17% 99%;
+    --card-foreground: 159 25% 16%;
+    --popover: 80 17% 99%;
+    --popover-foreground: 159 25% 16%;
+    --primary: 144 39% 29%;
+    --primary-foreground: 80 17% 99%;
+    --secondary: 130 12% 89%;
+    --secondary-foreground: 159 25% 16%;
+    --muted: 130 10% 91%;
+    --muted-foreground: 155 13% 35%;
+    --accent: 135 15% 87%;
+    --accent-foreground: 159 25% 16%;
+    --destructive: 4 65% 40%;
+    --destructive-foreground: 80 17% 99%;
+    --border: 143 11% 77%;
+    --input: 143 11% 72%;
+    --ring: 144 39% 29%;
+    --success: 144 39% 29%;
+    --success-surface: 145 26% 90%;
+    --mist-highlight: 80 17% 99%;
+    --mist-shadow: 159 23% 25%;
+    --sidebar: 144 13% 91%;
+    --preview-stage: 145 10% 90%;
+    --inspector-surface: 80 17% 99%;
   }
 
   * { @apply border-border; }
@@ -39,32 +73,6 @@
   }
 
   button, textarea { font: inherit; }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 0 0% 12%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 16%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 16%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 0 0% 92%;
-    --primary-foreground: 0 0% 10%;
-    --secondary: 0 0% 20%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 22%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 0 0% 24%;
-    --accent-foreground: 0 0% 95%;
-    --border: 0 0% 29%;
-    --input: 0 0% 38%;
-    --ring: 0 0% 68%;
-    --success: 142 60% 68%;
-    --success-surface: 142 28% 20%;
-    --mist-highlight: 0 0% 100%;
-    --mist-shadow: 0 0% 0%;
-  }
 }
 
 .pet-window {

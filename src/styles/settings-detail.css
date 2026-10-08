@@ -4,7 +4,8 @@
   gap: 0;
   padding: 0;
   overflow: hidden;
-  background: hsl(var(--card));
+  background: hsl(var(--inspector-surface));
+  border-left: 1px solid hsl(var(--primary) / .22);
 }
 
 .pet-detail-sheet .inspector-panel {
@@ -26,7 +27,7 @@
   display: flex;
   min-height: 100%;
   flex-direction: column;
-  padding: 28px 28px 24px;
+  padding: 32px 30px 26px;
 }
 
 .inspector-hero {
@@ -43,8 +44,9 @@
   flex: none;
   place-items: center;
   overflow: hidden;
-  background: hsl(var(--muted));
-  border-radius: calc(var(--radius) - 4px);
+  background: hsl(var(--preview-stage));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
 }
 
 .inspector-avatar .sprite-preview-frame {
@@ -58,17 +60,17 @@
 .inspector-title h2 {
   margin: 0;
   overflow: hidden;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 23px;
+  font-weight: 700;
   letter-spacing: -.025em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.inspector-activate { width: 100%; margin-top: 18px; }
-.rule { height: 1px; margin: 24px 0; background: hsl(var(--border)); }
+.inspector-activate { width: 100%; height: 42px; margin-top: 22px; }
+.rule { height: 1px; margin: 27px 0; background: hsl(var(--border) / .8); }
 .setting-row { display: flex; align-items: center; gap: 12px; }
-.setting-copy { min-width: 0; flex: 1; font-size: 13px; font-weight: 600; }
+.setting-copy { min-width: 0; flex: 1; font-size: 14px; font-weight: 650; }
 .setting-copy p {
   margin: 3px 0 0;
   color: hsl(var(--muted-foreground));
@@ -80,9 +82,9 @@
 .setting-icon svg,
 .metric-icon svg { width: 17px; height: 17px; }
 
-.dialogue-stack { display: flex; flex-direction: column; margin-top: 18px; }
-.dialogue-editor { padding: 17px 0 20px; border-bottom: 1px solid hsl(var(--border)); }
-.dialogue-editor:first-child { border-top: 1px solid hsl(var(--border)); }
+.dialogue-stack { display: flex; flex-direction: column; margin-top: 21px; }
+.dialogue-editor { padding: 19px 0 21px; border-bottom: 1px solid hsl(var(--border) / .8); }
+.dialogue-editor:first-child { border-top: 1px solid hsl(var(--border) / .8); }
 .dialogue-editor-heading {
   display: flex;
   align-items: flex-start;
@@ -92,7 +94,7 @@
 }
 .dialogue-editor-copy { min-width: 0; }
 .dialogue-editor-title { display: flex; align-items: baseline; gap: 8px; }
-.dialogue-editor-title label { font-size: 13px; font-weight: 600; }
+.dialogue-editor-title label { font-size: 14px; font-weight: 650; }
 .dialogue-editor-title span,
 .dialogue-editor-heading p { color: hsl(var(--muted-foreground)); font-size: 12px; }
 .dialogue-editor-heading p { margin: 4px 0 0; }
@@ -103,9 +105,9 @@
 .dialogue-list-scroll {
   min-height: 0;
   overflow-y: auto;
-  background: hsl(var(--muted) / .35);
-  border: 1px solid hsl(var(--border));
-  border-radius: calc(var(--radius) - 4px);
+  background: hsl(var(--background) / .55);
+  border: 1px solid hsl(var(--border) / .8);
+  border-radius: var(--radius);
 }
 .dialogue-list { display: flex; flex-direction: column; }
 .dialogue-line {
@@ -114,7 +116,7 @@
   align-items: start;
   gap: 8px;
   padding: 8px;
-  border-bottom: 1px solid hsl(var(--border));
+  border-bottom: 1px solid hsl(var(--border) / .6);
 }
 .dialogue-line:last-child { border-bottom: 0; }
 .dialogue-line-number {
@@ -127,6 +129,7 @@
 .dialogue-line-input {
   min-height: 40px;
   background: hsl(var(--card));
+  border-color: hsl(var(--border) / .8);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -142,10 +145,10 @@
 }
 .metric-card {
   min-width: 0;
-  padding: 18px 0;
+  padding: 20px 0;
   color: hsl(var(--muted-foreground));
   font-size: 12px;
-  border-bottom: 1px solid hsl(var(--border));
+  border-bottom: 1px solid hsl(var(--border) / .8);
 }
 .metric-card-wide { grid-column: 1 / -1; }
 .metric-heading { display: flex; align-items: center; gap: 8px; }
@@ -173,7 +176,7 @@
   gap: 10px;
   margin-top: auto;
   padding: 16px 0 8px;
-  background: hsl(var(--card));
+  background: hsl(var(--inspector-surface));
 }
 .save-button { flex: 1; }
 .empty-inspector { display: grid; height: 100%; place-items: center; color: hsl(var(--muted-foreground)); font-size: 13px; }

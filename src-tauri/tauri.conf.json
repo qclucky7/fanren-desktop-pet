@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "凡人修仙传桌宠",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "identifier": "com.wangchen.fanren-desktop-pet",
   "build": {
     "frontendDist": "../dist",
@@ -41,13 +41,19 @@
       "csp": null,
       "assetProtocol": {
         "enable": true,
-        "scope": ["$DATA/fanren-desktop-pet/**"]
+        "scope": [
+          "$DATA/fanren-desktop-pet/**"
+        ]
       }
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "publisher": "qclucky7 (GitHub)",
+    "homepage": "https://github.com/qclucky7/fanren-desktop-pet",
+    "targets": [
+      "nsis"
+    ],
     "resources": [
       "../pets/**/*.json",
       "../pets/**/*.webp"
@@ -55,7 +61,9 @@
     "windows": {
       "nsis": {
         "installMode": "currentUser",
-        "languages": ["SimpChinese"],
+        "languages": [
+          "SimpChinese"
+        ],
         "installerIcon": "icons/icon.ico"
       }
     },

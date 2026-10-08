@@ -1,0 +1,15 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "settings-project-links",
+  "description": "Allow the settings window to open the project's public pages",
+  "windows": ["settings"],
+  "permissions": [
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [
+        { "url": "https://github.com/qclucky7/fanren-desktop-pet/releases" },
+        { "url": "https://space.bilibili.com/60387074/dynamic" }
+      ]
+    }
+  ]
+}

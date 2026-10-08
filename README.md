@@ -1,4 +1,10 @@
-# 凡人修仙传桌宠
+<p align="center">
+  <img src="src-tauri/icons/128x128@2x.png" alt="凡人修仙传桌宠图标：小绿瓶" width="128" height="128">
+</p>
+
+<h1 align="center">凡人修仙传桌宠</h1>
+
+<p align="center">让 Codex 生成的宠物独立展示在 Windows 桌面。</p>
 
 一款基于《凡人修仙传》角色制作的 Windows 桌面宠物播放器。选择角色后，它会在桌面播放动画、跟随鼠标视线，并在待机、拖动和单击时显示对应对话。应用在本地运行，无需账号或在线服务。
 

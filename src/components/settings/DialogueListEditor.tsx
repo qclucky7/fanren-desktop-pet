@@ -87,7 +87,7 @@ export function DialogueListEditor(props: DialogueListEditorProps) {
             <Label>{label}</Label>
             <span>{lines.filter((line) => line.trim()).length} 条</span>
           </div>
-          <p>{hint} · 每条独立保存</p>
+          <p>{hint}</p>
         </div>
         <Button
           type="button"

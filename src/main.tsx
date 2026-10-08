@@ -2,6 +2,8 @@ import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "@/styles.css";
 import "@/styles/settings.css";
+import "@/styles/settings-library.css";
+import "@/styles/settings-detail.css";
 import "@/styles/settings-general.css";
 
 const PetStage = lazy(() => import("@/components/pet/PetStage")

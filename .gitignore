@@ -1,5 +1,6 @@
 /dist/
 /release/
+/docs/superpowers/
 /node_modules/
 /src-tauri/target/
 /src-tauri/gen/schemas/

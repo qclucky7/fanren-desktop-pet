@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "凡人修仙传桌宠",
   "version": "0.1.0",
-  "identifier": "com.wangchen.lingban-pet-player",
+  "identifier": "com.wangchen.fanren-desktop-pet",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://127.0.0.1:1420",
@@ -41,7 +41,7 @@
       "csp": null,
       "assetProtocol": {
         "enable": true,
-        "scope": ["$APPDATA/**"]
+        "scope": ["$DATA/fanren-desktop-pet/**"]
       }
     }
   },

@@ -170,7 +170,7 @@ mod tests {
     #[test]
     fn corrupt_state_is_preserved_before_recovery() {
         let data_dir = std::env::temp_dir().join(format!(
-            "lingban-corrupt-state-{}-{}",
+            "fanren-corrupt-state-{}-{}",
             std::process::id(),
             unique_file_suffix()
         ));
@@ -198,7 +198,7 @@ mod tests {
     #[test]
     fn state_replacement_leaves_a_complete_readable_file() {
         let data_dir = std::env::temp_dir().join(format!(
-            "lingban-atomic-state-{}-{}",
+            "fanren-atomic-state-{}-{}",
             std::process::id(),
             unique_file_suffix()
         ));

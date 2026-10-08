@@ -1,3 +1,4 @@
+mod data_directory;
 mod dialogues;
 mod models;
 mod pets;
@@ -28,7 +29,7 @@ pub fn run() {
                 )?;
             }
 
-            let data_dir = app.path().app_data_dir()?;
+            let data_dir = data_directory::application_data_directory(&app.path().data_dir()?);
             fs::create_dir_all(state::pets_dir(&data_dir))?;
             let built_in_pet_ids =
                 pets::seed_built_ins(app.handle(), &data_dir).map_err(std::io::Error::other)?;

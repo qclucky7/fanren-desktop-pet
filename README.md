@@ -71,7 +71,7 @@ pets/<id>/
 
 仓库内宠物的 `preview.webp` 会在 `npm run dev` 或 `npm run build` 前从图集第一帧自动生成或更新；也可运行 `npm run generate:pet-previews` 单独刷新。管理页使用小预览图，播放动画时才加载完整图集。
 
-内置宠物在应用数据目录中带有 `.lingban-built-in` 标记，由应用维护；请勿手工更改该标记。
+内置宠物在应用数据目录中带有 `.fanren-built-in` 标记，由应用维护；请勿手工更改该标记。
 
 ## 项目结构
 
@@ -84,7 +84,7 @@ scripts/          预览图生成、版本和打包脚本
 release-notes/    GitHub Release 的版本说明
 ```
 
-核心用户状态保存在本机应用数据目录的 `player-state.json`。宠物首次导入时会读取包内默认对话；之后编辑内容以该状态文件为准。更新 `dialogues.json` 后，已有用户需在对应角色的设置中对所需分组点击“恢复默认”，才能载入新台词。
+Windows 用户数据目录为 `%APPDATA%\fanren-desktop-pet`，其中 `player-state.json` 保存核心用户状态，`pets/` 保存宠物副本。宠物首次导入时会读取包内默认对话；之后编辑内容以状态文件为准。更新 `dialogues.json` 后，已有用户需在对应角色的设置中对所需分组点击“恢复默认”，才能载入新台词。
 
 ## 授权说明
 

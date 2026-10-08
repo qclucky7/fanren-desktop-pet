@@ -4,9 +4,10 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { DEFAULT_PREFERENCES, DISCOVERED_PETS, loadBrowserPets } from "@/data/pet-catalog";
 import { MAX_DIALOGUE_SECONDS, MIN_DIALOGUE_SECONDS, type DialogueGroups, type DialogueKind, type PetRecord, type PlayerPreferences } from "./types";
 
-const PREFS_KEY = "lingban.preferences";
-const DIALOGUES_KEY = "lingban.dialogues";
-const AUTOSTART_KEY = "lingban.autostart-preview";
+const PREFS_KEY = "fanren-desktop-pet.preferences";
+const DIALOGUES_KEY = "fanren-desktop-pet.dialogues";
+const AUTOSTART_KEY = "fanren-desktop-pet.autostart-preview";
+const STATE_CHANGE_EVENT = "fanren-desktop-pet-state-changed";
 
 function parseJson(raw: string | null): unknown {
   if (!raw) return null;
@@ -178,7 +179,7 @@ export async function updatePreferences(preferences: PlayerPreferences) {
   if (isTauriRuntime()) return invoke<PlayerPreferences>("update_preferences", { preferences });
   const normalized = normalizeBrowserPreferences(preferences);
   localStorage.setItem(PREFS_KEY, JSON.stringify(normalized));
-  window.dispatchEvent(new Event("lingban-state-changed"));
+  window.dispatchEvent(new Event(STATE_CHANGE_EVENT));
   return normalized;
 }
 
@@ -197,7 +198,7 @@ export async function saveDialogues(id: string, dialogues: DialogueGroups) {
   const normalized = normalizedDialogueGroups(dialogues) ?? { idle: [], drag: [], touch: [] };
   saved[id] = normalized;
   localStorage.setItem(DIALOGUES_KEY, JSON.stringify(saved));
-  window.dispatchEvent(new Event("lingban-state-changed"));
+  window.dispatchEvent(new Event(STATE_CHANGE_EVENT));
 }
 
 export async function resetDialogueGroup(id: string, kind: DialogueKind): Promise<DialogueGroups> {
@@ -230,7 +231,7 @@ export async function resetDialogueGroup(id: string, kind: DialogueKind): Promis
   };
   saved[id] = restored;
   localStorage.setItem(DIALOGUES_KEY, JSON.stringify(saved));
-  window.dispatchEvent(new Event("lingban-state-changed"));
+  window.dispatchEvent(new Event(STATE_CHANGE_EVENT));
   return restored;
 }
 
@@ -269,6 +270,6 @@ export async function openPetDirectory(): Promise<void> {
 export async function subscribeToStateChanges(callback: () => void): Promise<UnlistenFn> {
   if (isTauriRuntime()) return listen("player-state-changed", callback);
   const listener = () => callback();
-  window.addEventListener("lingban-state-changed", listener);
-  return () => window.removeEventListener("lingban-state-changed", listener);
+  window.addEventListener(STATE_CHANGE_EVENT, listener);
+  return () => window.removeEventListener(STATE_CHANGE_EVENT, listener);
 }

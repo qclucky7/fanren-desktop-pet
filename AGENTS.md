@@ -86,7 +86,7 @@ cargo test --manifest-path src-tauri/Cargo.toml
 - 共享领域类型放在 `src/lib/types.ts`，不要在组件中复制 Tauri 返回结构。
 - 可计算、可注入随机源的逻辑放入纯函数；UI 组件只编排状态和副作用。
 - 副作用必须清理定时器、事件监听和原生订阅。异步 effect 要处理组件卸载后的回写风险。
-- 保留浏览器 fallback：原生能力通过 `isTauriRuntime()` 分支，浏览器数据继续使用 `localStorage` 和 `lingban-state-changed`。
+- 保留浏览器 fallback：原生能力通过 `isTauriRuntime()` 分支，浏览器数据继续使用 `localStorage` 和 `fanren-desktop-pet-state-changed`。
 - 用户界面当前使用简体中文。新增可见文本、错误提示和无障碍名称保持中文且语义明确。
 - 交互元素使用语义化 HTML，保留键盘操作、焦点状态、`aria-*` 和 `prefers-reduced-motion` 支持。
 - 复用 `src/components/ui/` 与现有 CSS token；除非任务要求，不新增第二套组件库或全局样式体系。
